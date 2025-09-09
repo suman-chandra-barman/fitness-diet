@@ -54,9 +54,7 @@ const Navbar = () => {
 
           {/* Desktop Join Button */}
           <div className="hidden md:block">
-            <Button className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2 rounded-md font-medium transition-all duration-200 shadow-md hover:shadow-lg">
-              Join Now
-            </Button>
+            <Button>Join Now</Button>
           </div>
 
           {/* Mobile menu button */}
