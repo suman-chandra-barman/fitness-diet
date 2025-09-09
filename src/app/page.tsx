@@ -1,3 +1,4 @@
+import FeaturesSection from "@/components/home/Features";
 import HeroSection from "@/components/home/HeroSection";
 import Navbar from "@/components/home/Navbar";
 import PersonalizedResults from "@/components/home/PersonalizedResult";
@@ -10,6 +11,7 @@ export default function HomePage() {
       <HeroSection />
       <Upcomming />
       <PersonalizedResults />
+      <FeaturesSection />
     </div>
   );
 }
