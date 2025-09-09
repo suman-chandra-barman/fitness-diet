@@ -1,5 +1,6 @@
 import HeroSection from "@/components/home/HeroSection";
 import Navbar from "@/components/home/Navbar";
+import PersonalizedResults from "@/components/home/PersonalizedResult";
 import Upcomming from "@/components/home/Upcomming";
 
 export default function HomePage() {
@@ -8,6 +9,7 @@ export default function HomePage() {
       <Navbar />
       <HeroSection />
       <Upcomming />
+      <PersonalizedResults />
     </div>
   );
 }
