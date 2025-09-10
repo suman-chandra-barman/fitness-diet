@@ -1,4 +1,5 @@
 import FeaturesSection from "@/components/home/Features";
+import Footer from "@/components/home/Footer";
 import GettingStarted from "@/components/home/GettingStarted";
 import HeroSection from "@/components/home/HeroSection";
 import Navbar from "@/components/home/Navbar";
@@ -18,6 +19,7 @@ export default function HomePage() {
       <GettingStarted />
       <OurServices />
       <UserInterface />
+      <Footer />
     </div>
   );
 }

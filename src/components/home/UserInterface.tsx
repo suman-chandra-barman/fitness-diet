@@ -33,7 +33,7 @@ export default function UserInterface() {
           </div>
           {/* Right Content  */}
           <div className="space-y-8 md:px-8 pt-12  md:py-12">
-            <h2 className="text-2xl lg:text-4xl font-bold text-gray-900 leading-tight">
+            <h2 className="text-2xl lg:text-3xl font-bold text-gray-900 leading-tight">
               No More Expensive Coaches Just Better Result
             </h2>
 
