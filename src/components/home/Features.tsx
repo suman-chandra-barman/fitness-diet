@@ -17,7 +17,7 @@ const features = [
 
 export default function FeaturesSection() {
   return (
-    <div className="bg-gradient-to-br from-purple-50 to-purple-100">
+    <div className="bg-[#F2ECFF]">
       <div className="container mx-auto px-4 sm:px-6">
         <div className="grid md:grid-cols-2 gap-4 lg:gap-12 items-end">
           {/* Left Content */}
