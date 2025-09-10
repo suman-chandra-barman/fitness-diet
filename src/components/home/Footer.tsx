@@ -11,7 +11,7 @@ import playstore from "@/assets/play-store.png";
 
 export default function Footer() {
   return (
-    <footer className="bg-purple-100 py-6 md:mt-[100px]">
+    <footer className="bg-purple-50 py-6 md:mt-[100px]">
       <div className="container mx-auto px-4 flex flex-col md:flex-row justify-between items-center">
         <div className="mb-4 md:mb-0">
           <Image src={logo} alt="BeFT Logo" width={100} height={50} />
@@ -68,9 +68,9 @@ export default function Footer() {
             alt="App Store"
             width={200}
             height={50}
-            className="md:absolute -top-40"
+            className="md:absolute -top-45"
           />
-          <p className=" text-gray-600 mt-2">Download The App</p>
+          <p className="text-xl mt-2 font-bold">Download The App</p>
           <Link href="#">
             <Image
               src={playstore}
