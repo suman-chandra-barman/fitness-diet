@@ -5,6 +5,7 @@ import Navbar from "@/components/home/Navbar";
 import OurServices from "@/components/home/OurServices";
 import PersonalizedResults from "@/components/home/PersonalizedResult";
 import Upcomming from "@/components/home/Upcomming";
+import UserInterface from "@/components/home/UserInterface";
 
 export default function HomePage() {
   return (
@@ -16,6 +17,7 @@ export default function HomePage() {
       <FeaturesSection />
       <GettingStarted />
       <OurServices />
+      <UserInterface />
     </div>
   );
 }

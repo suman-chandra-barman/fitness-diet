@@ -3,24 +3,38 @@
 import { Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
-import exerciseLady from "@/assets/service.png";
+import phones from "@/assets/user-interface.png";
 
 const features = [
-  "For developers and AI models BeFT Model Context Protocol Server (Soon).",
-  "AI-Powered Personalized Plans, BeFT AI Chatbot, affordable subscription prices",
-  "BeFT as a Service for GYMs, trainers and diet specialists (Soon)",
-  "For GYMs BeFT AI API (Soon)",
+  "Personalized Fitness & Meal Plans",
+  "AI Chat Coach",
+  "Smart Food Image Analysis",
+  "Workout Programs for Gym & Home",
+  "Smartwatch Integration",
+  "Goal-Oriented Training by Level",
+  "Custom Meal Plans",
 ];
 
-export default function OurServices() {
+export default function UserInterface() {
   return (
-    <div className="bg-gradient-to-br from-purple-50 to-purple-100">
-      <div className="container mx-auto px-4 sm:px-6">
+    <div>
+      <div className="container mx-auto px-4 sm:px-6 py-12">
+        <div>
+          <h2 className="font-bold text-2xl md:text-4xl text-center">
+            Application with the best user interface
+          </h2>
+          <div className="h-1 bg-gray-300 w-[350px] md:w-[500px] mx-auto mt-5"></div>
+          <div className="h-1 bg-gray-300 w-[200px] md:w-[300px] mx-auto mt-1"></div>
+        </div>
         <div className="grid md:grid-cols-2 gap-4 lg:gap-12 items-end">
           {/* Left Content */}
+          <div>
+            <Image src={phones} alt="User Interface" objectFit="contain" />
+          </div>
+          {/* Right Content  */}
           <div className="space-y-8 md:px-8 pt-12  md:py-12">
-            <h2 className="text-2xl md:text-4xl font-bold text-gray-900 leading-tight">
-              Our Service
+            <h2 className="text-2xl lg:text-4xl font-bold text-gray-900 leading-tight">
+              No More Expensive Coaches Just Better Result
             </h2>
 
             <div className="space-y-4">
@@ -37,11 +51,6 @@ export default function OurServices() {
             </div>
 
             <Button>Try the AI Coach - Free!</Button>
-          </div>
-
-          {/* Right Content  */}
-          <div>
-            <Image src={exerciseLady} alt="Exercise Lady" objectFit="contain" />
           </div>
         </div>
       </div>
