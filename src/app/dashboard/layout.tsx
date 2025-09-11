@@ -6,7 +6,7 @@ function DashboardLayout({ children }: { children: React.ReactNode }) {
   return (
     <SidebarProvider>
       <DashboardSidebar />
-      <main className="relative">
+      <main className="relative w-full">
         <div className="absolute top-[30px] md:left-[-13px] z-10">
           <SidebarTrigger />
         </div>
