@@ -88,7 +88,7 @@ const OverviewPage = () => {
             ))}
           </div>
           <YourGoal />
-          <PlanAnalytics />
+          <PlanAnalytics hasData={false} />
         </div>
 
         {/* Right Column - Today's Plan */}

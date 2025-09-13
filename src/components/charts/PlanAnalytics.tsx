@@ -16,18 +16,62 @@ import {
   YAxis,
   ResponsiveContainer,
   CartesianGrid,
-  Tooltip,
 } from "recharts";
 
 interface AnalyticsData {
   date: string;
-  diet: number;
-  workout: number;
+  diet: number | null;
+  workout: number | null;
 }
 
-const PlanAnalytics = () => {
+const PlanAnalytics = ({ hasData = false }) => {
   const [selectedPeriod, setSelectedPeriod] = useState("monthly");
 
+  // Empty data structure for different periods
+  const monthlyEmptyData: AnalyticsData[] = [
+    { date: "2 Sep", diet: null, workout: null },
+    { date: "4 Sep", diet: null, workout: null },
+    { date: "6 Sep", diet: null, workout: null },
+    { date: "8 Sep", diet: null, workout: null },
+    { date: "10 Sep", diet: null, workout: null },
+    { date: "12 Sep", diet: null, workout: null },
+    { date: "14 Sep", diet: null, workout: null },
+    { date: "16 Sep", diet: null, workout: null },
+    { date: "18 Sep", diet: null, workout: null },
+    { date: "20 Sep", diet: null, workout: null },
+    { date: "22 Sep", diet: null, workout: null },
+    { date: "24 Sep", diet: null, workout: null },
+    { date: "26 Sep", diet: null, workout: null },
+    { date: "28 Sep", diet: null, workout: null },
+    { date: "30 Sep", diet: null, workout: null },
+  ];
+
+  const weeklyEmptyData: AnalyticsData[] = [
+    { date: "Mon", diet: null, workout: null },
+    { date: "Tue", diet: null, workout: null },
+    { date: "Wed", diet: null, workout: null },
+    { date: "Thu", diet: null, workout: null },
+    { date: "Fri", diet: null, workout: null },
+    { date: "Sat", diet: null, workout: null },
+    { date: "Sun", diet: null, workout: null },
+  ];
+
+  const yearlyEmptyData: AnalyticsData[] = [
+    { date: "Jan", diet: null, workout: null },
+    { date: "Feb", diet: null, workout: null },
+    { date: "Mar", diet: null, workout: null },
+    { date: "Apr", diet: null, workout: null },
+    { date: "May", diet: null, workout: null },
+    { date: "Jun", diet: null, workout: null },
+    { date: "Jul", diet: null, workout: null },
+    { date: "Aug", diet: null, workout: null },
+    { date: "Sep", diet: null, workout: null },
+    { date: "Oct", diet: null, workout: null },
+    { date: "Nov", diet: null, workout: null },
+    { date: "Dec", diet: null, workout: null },
+  ];
+
+  // Data with actual values when hasData is true
   const monthlyData: AnalyticsData[] = [
     { date: "2 Sep", diet: 45, workout: 40 },
     { date: "4 Sep", diet: 50, workout: 70 },
@@ -72,13 +116,24 @@ const PlanAnalytics = () => {
   ];
 
   const getCurrentData = () => {
-    switch (selectedPeriod) {
-      case "weekly":
-        return weeklyData;
-      case "yearly":
-        return yearlyData;
-      default:
-        return monthlyData;
+    if (hasData) {
+      switch (selectedPeriod) {
+        case "weekly":
+          return weeklyData;
+        case "yearly":
+          return yearlyData;
+        default:
+          return monthlyData;
+      }
+    } else {
+      switch (selectedPeriod) {
+        case "weekly":
+          return weeklyEmptyData;
+        case "yearly":
+          return yearlyEmptyData;
+        default:
+          return monthlyEmptyData;
+      }
     }
   };
 
@@ -131,8 +186,7 @@ const PlanAnalytics = () => {
                 bottom: 20,
               }}
             >
-              <CartesianGrid strokeDasharray="3 3" />
-              <Tooltip />
+              <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
               <XAxis
                 dataKey="date"
                 axisLine={false}
@@ -148,32 +202,36 @@ const PlanAnalytics = () => {
                 tickFormatter={(value) => `${value}%`}
                 ticks={[20, 40, 60, 80, 100]}
               />
-              <Line
-                type="monotone"
-                dataKey="diet"
-                stroke="#3B82F6"
-                strokeWidth={3}
-                dot={false}
-                activeDot={{
-                  r: 4,
-                  fill: "#3B82F6",
-                  strokeWidth: 2,
-                  stroke: "#ffffff",
-                }}
-              />
-              <Line
-                type="monotone"
-                dataKey="workout"
-                stroke="#A855F7"
-                strokeWidth={3}
-                dot={false}
-                activeDot={{
-                  r: 4,
-                  fill: "#A855F7",
-                  strokeWidth: 2,
-                  stroke: "#ffffff",
-                }}
-              />
+              {hasData && (
+                <>
+                  <Line
+                    type="monotone"
+                    dataKey="diet"
+                    stroke="#3B82F6"
+                    strokeWidth={3}
+                    dot={false}
+                    activeDot={{
+                      r: 4,
+                      fill: "#3B82F6",
+                      strokeWidth: 2,
+                      stroke: "#ffffff",
+                    }}
+                  />
+                  <Line
+                    type="monotone"
+                    dataKey="workout"
+                    stroke="#A855F7"
+                    strokeWidth={3}
+                    dot={false}
+                    activeDot={{
+                      r: 4,
+                      fill: "#A855F7",
+                      strokeWidth: 2,
+                      stroke: "#ffffff",
+                    }}
+                  />
+                </>
+              )}
             </LineChart>
           </ResponsiveContainer>
         </div>
