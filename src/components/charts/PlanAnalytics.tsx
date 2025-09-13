@@ -140,7 +140,7 @@ const PlanAnalytics = ({ hasData = false }) => {
   const currentData = getCurrentData();
 
   return (
-    <Card className="w-full bg-white shadow-sm border border-gray-100">
+    <Card className="w-full bg-white shadow-none border-0 border-gray-100">
       <CardHeader className="pb-4">
         <div className="flex items-center justify-between">
           <h3 className="text-xl font-semibold text-gray-900">
