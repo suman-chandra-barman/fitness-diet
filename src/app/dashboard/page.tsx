@@ -44,15 +44,7 @@ const OverviewPage = () => {
           Overview
         </h1>
         <div className="flex items-center gap-3">
-          <Button
-            className="bg-orange-500 hover:bg-orange-600 text-white"
-            onClick={() => router.push("/dashboard/create-plan")}
-          >
-            <div className="border border-white rounded p-0.5">
-              <Plus className="w-4 h-4" />
-            </div>
-            New Add Plan
-          </Button>
+           
           <Button variant="outline" size="icon">
             <Bell className="w-4 h-4" />
           </Button>
@@ -67,7 +59,7 @@ const OverviewPage = () => {
             <DietProgressChart />
             <WorkoutProgressChart />
           </div>
-
+ 
           {/* Nutrition Stats */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {nutritionStats.map((stat, index) => (

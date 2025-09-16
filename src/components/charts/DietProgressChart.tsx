@@ -9,11 +9,34 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  ResponsiveContainer,
+  Cell,
+  Tooltip,
+  TooltipProps,
+} from "recharts";
 
 interface DayProgress {
   day: string;
   progress: number;
 }
+
+// Custom tooltip component
+const CustomTooltip = ({ active, payload, label }: TooltipProps<number, string>) => {
+  if (active && payload && payload.length) {
+    const value = payload[0].value;
+    return (
+      <div className="bg-gray-900 text-white text-xs px-2 py-1 rounded whitespace-nowrap shadow-lg">
+        {value === 0 ? "No data" : `${value}%`}
+      </div>
+    );
+  }
+  return null;
+};
 
 const DietProgressChart = () => {
   const [selectedPeriod, setSelectedPeriod] = useState("weekly");
@@ -62,18 +85,11 @@ const DietProgressChart = () => {
   };
 
   const getBarColor = (progress: number) => {
-    if (progress === 0) return "bg-gray-300"; // No data
-    if (progress < 60) return "bg-[#F2ECFF]"; // Under 60%
-    return "bg-[#7738F8]"; // 60% and above
+    if (progress === 0) return "#d1d5db"; // gray-300 - No data
+    if (progress < 60) return "#F2ECFF"; // Light purple - Under 60%
+    return "#7738F8"; // Purple - 60% and above
   };
 
-  const getHoverColor = (progress: number) => {
-    if (progress === 0) return "hover:bg-gray-400"; // No data
-    if (progress < 60) return "hover:bg-purple-300"; // Under 60%
-    return "hover:bg-violet-700"; // 60% and above
-  };
-
-  const maxHeight = 200; // Maximum height for bars
   const currentData = getCurrentData();
 
   return (
@@ -95,55 +111,49 @@ const DietProgressChart = () => {
       </CardHeader>
 
       <CardContent className="px-6 pb-6">
-        <div className="relative">
-          {/* Y-axis labels */}
-          <div className="absolute left-0 top-0 bottom-8 flex flex-col justify-between text-xs text-gray-400 font-medium">
-            <span>100%</span>
-            <span>80%</span>
-            <span>60%</span>
-            <span>40%</span>
-            <span>20%</span>
-            <span>0%</span>
-          </div>
-
-          {/* Chart area */}
-          <div className="ml-12">
-            <div className="flex items-end justify-between gap-3 h-52">
-              {currentData.map((item, index) => {
-                const barHeight =
-                  item.progress === 0 ? 8 : (item.progress / 100) * maxHeight;
-                const barColor = getBarColor(item.progress);
-                const hoverColor = getHoverColor(item.progress);
-
-                return (
-                  <div
-                    key={`${item.day}-${index}`}
-                    className="flex flex-col items-center flex-1"
-                  >
-                    <div className="w-full flex items-end justify-center h-52">
-                      <div
-                        className={`w-full ${barColor} ${hoverColor} rounded-full transition-all duration-300 cursor-pointer relative group`}
-                        style={{ height: `${barHeight}px` }}
-                      >
-                        {/* Tooltip on hover */}
-                        <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                          <div className="bg-gray-900 text-white text-xs px-2 py-1 rounded whitespace-nowrap">
-                            {item.progress === 0
-                              ? "No data"
-                              : `${item.progress}%`}
-                          </div>
-                          <div className="w-0 h-0 border-l-2 border-r-2 border-t-4 border-transparent border-t-gray-900 mx-auto"></div>
-                        </div>
-                      </div>
-                    </div>
-                    <span className="text-xs text-gray-500 mt-3 font-medium">
-                      {item.day}
-                    </span>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
+        <div style={{ width: '100%', height: '200px' }}>
+          <ResponsiveContainer width="100%" height="100%">
+            <BarChart
+              data={currentData}
+              margin={{
+                top: 20,
+                right: 30,
+                left: 20,
+                bottom: 20,
+              }}
+              barCategoryGap="20%"
+            >
+              <XAxis 
+                dataKey="day" 
+                axisLine={false}
+                tickLine={false}
+                tick={{ fontSize: 12, fill: '#6b7280', fontWeight: 500 }}
+                dy={10}
+              />
+              <YAxis 
+                domain={[0, 100]}
+                ticks={[0, 20, 40, 60, 80, 100]}
+                axisLine={false}
+                tickLine={false}
+                tick={{ fontSize: 12, fill: '#9ca3af', fontWeight: 500 }}
+                tickFormatter={(value) => `${value}%`}
+              />
+              <Tooltip content={<CustomTooltip />} />
+              <Bar 
+                dataKey="progress" 
+                radius={[10, 10, 10, 10]}
+                minPointSize={8}
+              >
+                {currentData.map((entry, index) => (
+                  <Cell 
+                    key={`cell-${index}`} 
+                    fill={getBarColor(entry.progress)}
+                    className="hover:brightness-110 transition-all duration-300 cursor-pointer"
+                  />
+                ))}
+              </Bar>
+            </BarChart>
+          </ResponsiveContainer>
         </div>
       </CardContent>
     </Card>

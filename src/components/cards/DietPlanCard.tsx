@@ -3,12 +3,15 @@ import { Card, CardContent } from "../ui/card";
 import Image from "next/image";
 import { Button } from "../ui/button";
 import diet from "@/assets/svg/dashboard/diet light.svg";
+import { useRouter } from "next/navigation";
 
 type TDietPlanCardProps = {
   className?: string;
 };
 
 function DietPlanCard({ className }: TDietPlanCardProps) {
+  const router = useRouter();
+
   return (
     <Card className={className}>
       <CardContent className="p-6 text-center space-y-2">
@@ -21,7 +24,12 @@ function DietPlanCard({ className }: TDietPlanCardProps) {
           <p className="text-gray-600">Create Your Personalize</p>
           <h4 className="font-bold text-purple-600">Diet Plan</h4>
         </div>
-        <Button className=" text-white w-full">Create Plan</Button>
+        <Button
+          className="text-white mt-6"
+          onClick={() => router.push("/dashboard/create-diet-plan")}
+        >
+          Create Plan
+        </Button>
       </CardContent>
     </Card>
   );
