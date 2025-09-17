@@ -219,7 +219,7 @@ export default function DietPlanReport() {
   };
 
   return (
-    <div>
+    <div className="w-full">
       {/* Header */}
       <div className="bg-white border-b rounded-2xl p-4">
         <div className="flex items-center justify-between py-4">
@@ -244,7 +244,7 @@ export default function DietPlanReport() {
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
-        <div className="mb-6">
+        <div>
           <div className="flex items-center justify-between mb-4">
             <Select value={selectedWeek} onValueChange={setSelectedWeek}>
               <SelectTrigger className="w-32 border-orange-200 text-orange-500 font-medium">

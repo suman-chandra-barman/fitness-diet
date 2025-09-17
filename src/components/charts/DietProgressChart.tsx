@@ -29,7 +29,6 @@ interface DayProgress {
 const CustomTooltip = ({
   active,
   payload,
-  label,
 }: TooltipProps<number, string>) => {
   if (active && payload && payload.length) {
     const value = payload[0].value;
@@ -97,8 +96,8 @@ const DietProgressChart = () => {
   const currentData = getCurrentData();
 
   return (
-    <Card className="w-full bg-white shadow-sm border border-gray-100">
-      <CardHeader className="pb-4">
+    <Card className="w-full bg-white shadow-sm border border-gray-100 p-4 gap-4">
+      <CardHeader>
         <div className="flex items-center justify-between">
           <h3 className="text-lg font-semibold text-gray-900">Diet Progress</h3>
           <Select value={selectedPeriod} onValueChange={setSelectedPeriod}>
@@ -114,7 +113,7 @@ const DietProgressChart = () => {
         </div>
       </CardHeader>
 
-      <CardContent className="px-6 pb-6">
+      <CardContent className="px-6">
         <div style={{ width: "100%", height: "200px" }}>
           <ResponsiveContainer width="100%" height="100%">
             <BarChart
