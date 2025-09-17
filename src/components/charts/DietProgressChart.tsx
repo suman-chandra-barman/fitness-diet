@@ -26,7 +26,11 @@ interface DayProgress {
 }
 
 // Custom tooltip component
-const CustomTooltip = ({ active, payload, label }: TooltipProps<number, string>) => {
+const CustomTooltip = ({
+  active,
+  payload,
+  label,
+}: TooltipProps<number, string>) => {
   if (active && payload && payload.length) {
     const value = payload[0].value;
     return (
@@ -111,7 +115,7 @@ const DietProgressChart = () => {
       </CardHeader>
 
       <CardContent className="px-6 pb-6">
-        <div style={{ width: '100%', height: '200px' }}>
+        <div style={{ width: "100%", height: "200px" }}>
           <ResponsiveContainer width="100%" height="100%">
             <BarChart
               data={currentData}
@@ -123,32 +127,34 @@ const DietProgressChart = () => {
               }}
               barCategoryGap="20%"
             >
-              <XAxis 
-                dataKey="day" 
+              <XAxis
+                dataKey="day"
                 axisLine={false}
                 tickLine={false}
-                tick={{ fontSize: 12, fill: '#6b7280', fontWeight: 500 }}
+                tick={{ fontSize: 12, fill: "#6b7280", fontWeight: 500 }}
                 dy={10}
               />
-              <YAxis 
+              <YAxis
                 domain={[0, 100]}
                 ticks={[0, 20, 40, 60, 80, 100]}
                 axisLine={false}
                 tickLine={false}
-                tick={{ fontSize: 12, fill: '#9ca3af', fontWeight: 500 }}
+                tick={{ fontSize: 12, fill: "#9ca3af", fontWeight: 500 }}
                 tickFormatter={(value) => `${value}%`}
               />
               <Tooltip content={<CustomTooltip />} />
-              <Bar 
-                dataKey="progress" 
-                radius={[10, 10, 10, 10]}
+              <Bar
+                dataKey="progress"
+                radius={[9999, 9999, 9999, 9999]}
                 minPointSize={8}
+                maxBarSize={50}
+                className="rounded-full"
               >
                 {currentData.map((entry, index) => (
-                  <Cell 
-                    key={`cell-${index}`} 
+                  <Cell
+                    key={`cell-${index}`}
                     fill={getBarColor(entry.progress)}
-                    className="hover:brightness-110 transition-all duration-300 cursor-pointer"
+                    className="hover:brightness-no transition-all duration-300 cursor-pointer"
                   />
                 ))}
               </Bar>
