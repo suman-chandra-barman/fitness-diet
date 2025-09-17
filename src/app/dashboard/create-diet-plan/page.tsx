@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -67,16 +67,60 @@ export default function CreateDietPlan() {
     setValue,
     watch,
     formState: { errors },
+    trigger,
   } = useForm<FormData>();
+
+  const watchedFields = watch();
+  const [isNextDisabled, setIsNextDisabled] = useState(true);
+
+  // Check if current step's required fields are filled
+  useEffect(() => {
+    const checkRequiredFields = () => {
+      switch (currentStep) {
+        case 1:
+          return !!(
+            watchedFields.age &&
+            watchedFields.gender &&
+            watchedFields.height &&
+            watchedFields.weight &&
+            watchedFields.sleepHour &&
+            watchedFields.injuries &&
+            watchedFields.fitnessGoal &&
+            watchedFields.foodCategory
+          );
+        case 2:
+          return !!(
+            watchedFields.workoutPreference &&
+            watchedFields.medicalConditions &&
+            watchedFields.foodAllergies &&
+            watchedFields.dietaryPreference
+          );
+        case 3:
+          return true; // Health & Medical is optional (can be skipped)
+        case 4:
+          return !!(
+            watchedFields.dietDuration &&
+            watchedFields.mealsPerDay &&
+            watchedFields.cheatDayFrequency
+          );
+        default:
+          return false;
+      }
+    };
+
+    setIsNextDisabled(!checkRequiredFields());
+  }, [watchedFields, currentStep]);
 
   const onSubmit = (data: FormData) => {
     console.log("Form submitted:", data);
-
     // Handle form submission
-    // router.push("/");
+    router.push("/");
   };
 
-  const nextStep = () => {
+  const nextStep = async () => {
+    const isValid = await trigger();
+    if (!isValid) return;
+
     if (currentStep < 4) {
       setCurrentStep(currentStep + 1);
     }
@@ -95,7 +139,7 @@ export default function CreateDietPlan() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50">
+    <div className="min-h-screen  flex items-center justify-center bg-gray-50">
       {/* Progress Steps */}
       <div className="px-4 sm:px-6 lg:px-8 py-6">
         <div className="flex items-center justify-between mb-8">
@@ -335,7 +379,8 @@ export default function CreateDietPlan() {
                 <div className="flex justify-end">
                   <Button
                     onClick={nextStep}
-                    className="bg-orange-500 hover:bg-orange-600"
+                    disabled={isNextDisabled}
+                    className="bg-orange-500 hover:bg-orange-600 disabled:bg-gray-300 disabled:cursor-not-allowed"
                   >
                     Next <ArrowRight className="h-4 w-4 ml-2" />
                   </Button>
@@ -356,7 +401,7 @@ export default function CreateDietPlan() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <Label htmlFor="bodyFatLevel" className="mb-2">
-                      Body Fat Level (If you know)
+                      Body Fat Level (Optional)
                     </Label>
                     <Select
                       onValueChange={(value) => setValue("bodyFatLevel", value)}
@@ -476,7 +521,8 @@ export default function CreateDietPlan() {
                   </Button>
                   <Button
                     onClick={nextStep}
-                    className="bg-orange-500 hover:bg-orange-600"
+                    disabled={isNextDisabled}
+                    className="bg-orange-500 hover:bg-orange-600 disabled:bg-gray-300 disabled:cursor-not-allowed"
                   >
                     Next <ArrowRight className="h-4 w-4 ml-2" />
                   </Button>
@@ -660,7 +706,8 @@ export default function CreateDietPlan() {
                   </Button>
                   <Button
                     type="submit"
-                    className="bg-orange-500 hover:bg-orange-600"
+                    disabled={isNextDisabled}
+                    className="bg-orange-500 hover:bg-orange-600 disabled:bg-gray-300 disabled:cursor-not-allowed"
                   >
                     Generate Diet Plan
                   </Button>
