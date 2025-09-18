@@ -245,9 +245,10 @@ export default function DietPlanReport() {
           </DropdownMenu>
         </div>
         <div>
-          <div className="flex items-center justify-between mb-4">
+          {/* Days Navigation */}
+          <div className="flex space-x-2 overflow-x-auto gap-2 flex-wrap">
             <Select value={selectedWeek} onValueChange={setSelectedWeek}>
-              <SelectTrigger className="w-32 border-orange-200 text-orange-500 font-medium">
+              <SelectTrigger className="min-w-[100px] !h-[50px] border border-orange-500 text-orange-500 font-medium">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
@@ -258,17 +259,13 @@ export default function DietPlanReport() {
                 ))}
               </SelectContent>
             </Select>
-          </div>
-
-          {/* Days Navigation */}
-          <div className="flex space-x-2 overflow-x-auto gap-2 flex-wrap">
             {generateDays().map((day) => (
               <Button
                 key={day.day}
                 variant={selectedDay === day.day ? "default" : "outline"}
                 className={`min-w-[100px] h-[50px] flex-shrink-0 ${
                   selectedDay === day.day
-                    ? "bg-blue-100 text-blue-700 border-blue-200"
+                    ? "bg-purple-100 text-[#7738F8] border border-blue-200 hover:bg-"
                     : "bg-white text-gray-600 border-gray-200"
                 }`}
                 onClick={() => setSelectedDay(day.day)}
