@@ -9,21 +9,44 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  ResponsiveContainer,
+  Cell,
+  Tooltip,
+  TooltipProps,
+} from "recharts";
 
 interface DayProgress {
   day: string;
   progress: number;
 }
 
+// Custom tooltip component
+const CustomTooltip = ({ active, payload }: TooltipProps<number, string>) => {
+  if (active && payload && payload.length) {
+    const value = payload[0].value;
+    return (
+      <div className="bg-gray-900 text-white text-xs px-2 py-1 rounded whitespace-nowrap shadow-lg">
+        {value === 0 ? "No data" : `${value}%`}
+      </div>
+    );
+  }
+  return null;
+};
+
 const WorkoutProgressChart = () => {
   const [selectedPeriod, setSelectedPeriod] = useState("weekly");
 
   const weeklyData: DayProgress[] = [
-    { day: "Sun", progress: 0 },
+    { day: "Sun", progress: 90 },
     { day: "Mon", progress: 45 },
-    { day: "Tue", progress: 30 },
+    { day: "Tue", progress: 70 },
     { day: "Wed", progress: 75 },
-    { day: "Thu", progress: 0 },
+    { day: "Thu", progress: 35 },
     { day: "Fri", progress: 85 },
     { day: "Sat", progress: 55 },
   ];
@@ -32,18 +55,18 @@ const WorkoutProgressChart = () => {
     { day: "Week 1", progress: 65 },
     { day: "Week 2", progress: 40 },
     { day: "Week 3", progress: 80 },
-    { day: "Week 4", progress: 0 },
+    { day: "Week 4", progress: 95 },
   ];
 
   const yearlyData: DayProgress[] = [
     { day: "Jan", progress: 70 },
     { day: "Feb", progress: 45 },
-    { day: "Mar", progress: 0 },
+    { day: "Mar", progress: 60 },
     { day: "Apr", progress: 85 },
     { day: "May", progress: 55 },
     { day: "Jun", progress: 90 },
     { day: "Jul", progress: 35 },
-    { day: "Aug", progress: 0 },
+    { day: "Aug", progress: 80 },
     { day: "Sep", progress: 75 },
     { day: "Oct", progress: 60 },
     { day: "Nov", progress: 40 },
@@ -62,25 +85,20 @@ const WorkoutProgressChart = () => {
   };
 
   const getBarColor = (progress: number) => {
-    if (progress === 0) return "bg-gray-300"; // No data
-    if (progress < 60) return "bg-orange-50"; // Under 60%
-    return "bg-orange-500"; // 60% and above
+    if (progress === 0) return "#d1d5db"; // No data
+    if (progress < 60) return "#FEEFE9"; // Light orange - Under 60%
+    return "#F05B23"; // Orange - 60% and above
   };
 
-  const getHoverColor = (progress: number) => {
-    if (progress === 0) return "hover:bg-gray-400"; // No data
-    if (progress < 60) return "hover:bg-orange-100"; // Under 60%
-    return "hover:bg-orange-600"; // 60% and above
-  };
-
-  const maxHeight = 200; // Maximum height for bars
   const currentData = getCurrentData();
 
   return (
-    <Card className="w-full bg-white shadow-sm border border-gray-100">
-      <CardHeader className="pb-4">
+    <Card className="w-full bg-white shadow-sm border border-gray-100 p-4 gap-4">
+      <CardHeader>
         <div className="flex items-center justify-between">
-          <h3 className="text-lg font-semibold text-gray-900">Workout Progress</h3>
+          <h3 className="text-lg font-semibold text-gray-900">
+            Workout Progress
+          </h3>
           <Select value={selectedPeriod} onValueChange={setSelectedPeriod}>
             <SelectTrigger className="w-24 h-8 text-xs">
               <SelectValue />
@@ -94,56 +112,53 @@ const WorkoutProgressChart = () => {
         </div>
       </CardHeader>
 
-      <CardContent className="px-6 pb-6">
-        <div className="relative">
-          {/* Y-axis labels */}
-          <div className="absolute left-0 top-0 bottom-8 flex flex-col justify-between text-xs text-gray-400 font-medium">
-            <span>100%</span>
-            <span>80%</span>
-            <span>60%</span>
-            <span>40%</span>
-            <span>20%</span>
-            <span>0%</span>
-          </div>
-
-          {/* Chart area */}
-          <div className="ml-12">
-            <div className="flex items-end justify-between gap-3 h-52">
-              {currentData.map((item, index) => {
-                const barHeight =
-                  item.progress === 0 ? 8 : (item.progress / 100) * maxHeight;
-                const barColor = getBarColor(item.progress);
-                const hoverColor = getHoverColor(item.progress);
-
-                return (
-                  <div
-                    key={`${item.day}-${index}`}
-                    className="flex flex-col items-center flex-1"
-                  >
-                    <div className="w-full flex items-end justify-center h-52">
-                      <div
-                        className={`w-full ${barColor} ${hoverColor} rounded-full transition-all duration-300 cursor-pointer relative group`}
-                        style={{ height: `${barHeight}px` }}
-                      >
-                        {/* Tooltip on hover */}
-                        <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                          <div className="bg-gray-900 text-white text-xs px-2 py-1 rounded whitespace-nowrap">
-                            {item.progress === 0
-                              ? "No data"
-                              : `${item.progress}%`}
-                          </div>
-                          <div className="w-0 h-0 border-l-2 border-r-2 border-t-4 border-transparent border-t-gray-900 mx-auto"></div>
-                        </div>
-                      </div>
-                    </div>
-                    <span className="text-xs text-gray-500 mt-3 font-medium">
-                      {item.day}
-                    </span>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
+      <CardContent className="px-2">
+        <div style={{ width: "100%", height: "200px" }}>
+          <ResponsiveContainer width="100%" height="100%">
+            <BarChart
+              data={currentData}
+              margin={{
+                top: 20,
+                right: 0,
+                left: 0,
+                bottom: 20,
+              }}
+              barCategoryGap="5%"
+            >
+              <XAxis
+                dataKey="day"
+                axisLine={false}
+                tickLine={false}
+                tick={{ fontSize: 12, fill: "#6b7280", fontWeight: 500 }}
+                dy={10}
+              />
+              <YAxis
+                domain={[0, 100]}
+                ticks={[0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]}
+                axisLine={false}
+                tickLine={false}
+                tick={{ fontSize: 12, fill: "#9ca3af", fontWeight: 500 }}
+                tickFormatter={(value) => `${value}%`}
+                width={40}
+              />
+              <Tooltip content={<CustomTooltip />} />
+              <Bar
+                dataKey="progress"
+                radius={[20, 20, 20, 20]}
+                minPointSize={8}
+                maxBarSize={80}
+                className="rounded-full"
+              >
+                {currentData.map((entry, index) => (
+                  <Cell
+                    key={`cell-${index}`}
+                    fill={getBarColor(entry.progress)}
+                    className="hover:brightness-110 transition-all duration-300 cursor-pointer"
+                  />
+                ))}
+              </Bar>
+            </BarChart>
+          </ResponsiveContainer>
         </div>
       </CardContent>
     </Card>

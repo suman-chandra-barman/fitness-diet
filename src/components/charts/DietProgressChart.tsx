@@ -26,10 +26,7 @@ interface DayProgress {
 }
 
 // Custom tooltip component
-const CustomTooltip = ({
-  active,
-  payload,
-}: TooltipProps<number, string>) => {
+const CustomTooltip = ({ active, payload }: TooltipProps<number, string>) => {
   if (active && payload && payload.length) {
     const value = payload[0].value;
     return (
@@ -45,31 +42,31 @@ const DietProgressChart = () => {
   const [selectedPeriod, setSelectedPeriod] = useState("weekly");
 
   const weeklyData: DayProgress[] = [
-    { day: "Sun", progress: 0 },
+    { day: "Sun", progress: 100 },
     { day: "Mon", progress: 45 },
-    { day: "Tue", progress: 30 },
-    { day: "Wed", progress: 75 },
-    { day: "Thu", progress: 0 },
-    { day: "Fri", progress: 85 },
-    { day: "Sat", progress: 55 },
+    { day: "Tue", progress: 75 },
+    { day: "Wed", progress: 40 },
+    { day: "Thu", progress: 55 },
+    { day: "Fri", progress: 60 },
+    { day: "Sat", progress: 85 },
   ];
 
   const monthlyData: DayProgress[] = [
     { day: "Week 1", progress: 65 },
     { day: "Week 2", progress: 40 },
     { day: "Week 3", progress: 80 },
-    { day: "Week 4", progress: 0 },
+    { day: "Week 4", progress: 95 },
   ];
 
   const yearlyData: DayProgress[] = [
     { day: "Jan", progress: 70 },
     { day: "Feb", progress: 45 },
-    { day: "Mar", progress: 0 },
+    { day: "Mar", progress: 60 },
     { day: "Apr", progress: 85 },
     { day: "May", progress: 55 },
     { day: "Jun", progress: 90 },
     { day: "Jul", progress: 35 },
-    { day: "Aug", progress: 0 },
+    { day: "Aug", progress: 80 },
     { day: "Sep", progress: 75 },
     { day: "Oct", progress: 60 },
     { day: "Nov", progress: 40 },
@@ -113,18 +110,18 @@ const DietProgressChart = () => {
         </div>
       </CardHeader>
 
-      <CardContent className="px-6">
+      <CardContent className="px-2">
         <div style={{ width: "100%", height: "200px" }}>
           <ResponsiveContainer width="100%" height="100%">
             <BarChart
               data={currentData}
               margin={{
                 top: 20,
-                right: 30,
-                left: 20,
+                right: 0,
+                left: 0,
                 bottom: 20,
               }}
-              barCategoryGap="20%"
+              barCategoryGap="5%"
             >
               <XAxis
                 dataKey="day"
@@ -135,25 +132,26 @@ const DietProgressChart = () => {
               />
               <YAxis
                 domain={[0, 100]}
-                ticks={[0, 20, 40, 60, 80, 100]}
+                ticks={[0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]}
                 axisLine={false}
                 tickLine={false}
                 tick={{ fontSize: 12, fill: "#9ca3af", fontWeight: 500 }}
                 tickFormatter={(value) => `${value}%`}
+                width={40}
               />
               <Tooltip content={<CustomTooltip />} />
               <Bar
                 dataKey="progress"
-                radius={[9999, 9999, 9999, 9999]}
+                radius={[20, 20, 20, 20]}
                 minPointSize={8}
-                maxBarSize={50}
+                maxBarSize={80}
                 className="rounded-full"
               >
                 {currentData.map((entry, index) => (
                   <Cell
                     key={`cell-${index}`}
                     fill={getBarColor(entry.progress)}
-                    className="hover:brightness-no transition-all duration-300 cursor-pointer"
+                    className="hover:brightness-110 transition-all duration-300 cursor-pointer"
                   />
                 ))}
               </Bar>

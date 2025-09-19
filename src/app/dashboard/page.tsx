@@ -9,7 +9,6 @@ import protine from "@/assets/svg/dashboard/protien.svg";
 import fat from "@/assets/svg/dashboard/fat.svg";
 import carb from "@/assets/svg/dashboard/carb.svg";
 import DietProgressChart from "@/components/charts/DietProgressChart";
-import WorkoutProgressChart from "@/components/charts/WorkoutProgressChart";
 import YourGoal from "@/components/dashboard/overview/YourGoal";
 import PlanAnalytics from "@/components/charts/PlanAnalytics";
 import DietPlanCard from "@/components/cards/DietPlanCard";
@@ -17,6 +16,7 @@ import WorkoutPlanCard from "@/components/cards/WorkoutPlanCard";
 import TodayProgressCircleCard from "@/components/cards/TodayProgressCircleCard";
 import NutritionCard from "@/components/cards/NutritionCard";
 import { StaticImport } from "next/dist/shared/lib/get-img-props";
+import WorkoutProgressChart from "@/components/charts/WorkoutProgressChart";
 
 export type TNutritionStat = {
   name: string;
@@ -26,7 +26,6 @@ export type TNutritionStat = {
 };
 
 const OverviewPage = () => {
-
   const nutritionStats: TNutritionStat[] = [
     { name: "Calorie", value: "00", color: "bg-green-500", icon: calorie },
     { name: "Protein", value: "00g", color: "bg-blue-500", icon: protine },
@@ -42,7 +41,6 @@ const OverviewPage = () => {
           Overview
         </h1>
         <div className="flex items-center gap-3">
-           
           <Button variant="outline" size="icon">
             <Bell className="w-4 h-4" />
           </Button>
@@ -57,7 +55,7 @@ const OverviewPage = () => {
             <DietProgressChart />
             <WorkoutProgressChart />
           </div>
- 
+
           {/* Nutrition Stats */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {nutritionStats.map((stat, index) => (
