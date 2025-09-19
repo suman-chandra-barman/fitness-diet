@@ -12,7 +12,6 @@ import DietProgressChart from "@/components/charts/DietProgressChart";
 import WorkoutProgressChart from "@/components/charts/WorkoutProgressChart";
 import YourGoal from "@/components/dashboard/overview/YourGoal";
 import PlanAnalytics from "@/components/charts/PlanAnalytics";
-import { useRouter } from "next/navigation";
 import DietPlanCard from "@/components/cards/DietPlanCard";
 import WorkoutPlanCard from "@/components/cards/WorkoutPlanCard";
 import TodayProgressCircleCard from "@/components/cards/TodayProgressCircleCard";
@@ -27,7 +26,6 @@ export type TNutritionStat = {
 };
 
 const OverviewPage = () => {
-  const router = useRouter();
 
   const nutritionStats: TNutritionStat[] = [
     { name: "Calorie", value: "00", color: "bg-green-500", icon: calorie },
@@ -37,7 +35,7 @@ const OverviewPage = () => {
   ];
 
   return (
-    <div className="p-4 lg:p-6 bg-gray-50 min-h-screen">
+    <div className="py-4">
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
         <h1 className="text-2xl lg:text-3xl font-bold text-gray-900">

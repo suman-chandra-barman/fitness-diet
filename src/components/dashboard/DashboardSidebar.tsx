@@ -54,7 +54,7 @@ const footerItems = [
   },
   {
     title: "Logout",
-    url: "/logout",
+    url: "",
     icon: <LogOut />,
   },
 ];
@@ -65,7 +65,7 @@ export function DashboardSidebar() {
 
   return (
     <Sidebar collapsible="icon">
-      <SidebarHeader className="h-20">
+      <SidebarHeader className="h-20 mt-6">
         <Link href="/dashboard" className="text-lg font-bold">
           <Image src={logo} alt="Logo" width={100} />
         </Link>
@@ -73,32 +73,51 @@ export function DashboardSidebar() {
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupContent>
-            <SidebarMenu>
+            <SidebarMenu className="gap-4">
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton
                     asChild
-                    className={
-                      pathname === item.url
-                        ? "bg-orange-500 hover:bg-orange-500 text-white hover:text-white"
-                        : ""
-                    }
+                    className={`
+                      py-5 transition-all duration-200
+                      ${
+                        pathname === item.url
+                          ? "bg-orange-500 hover:bg-orange-500 text-white hover:text-white"
+                          : "hover:bg-gray-100"
+                      }
+                      ${
+                        state === "collapsed"
+                          ? "w-10 h-10 p-0 mx-auto rounded-lg justify-center items-center"
+                          : ""
+                      }
+                    `}
                   >
-                    <Link href={item.url}>
+                    <Link
+                      href={item.url}
+                      className={`
+                        ${
+                          state === "collapsed"
+                            ? "flex justify-center items-center w-full h-full"
+                            : "flex items-center"
+                        }
+                      `}
+                    >
                       <span
-                        className={`relative w-6 h-6 flex-shrink-0 transition-all duration-200 ${
-                          pathname === item.url ? "brightness-0 invert" : ""
-                        }`}
+                        className={`
+                          w-6 h-6 flex-shrink-0 transition-all duration-200
+                          ${pathname === item.url ? "brightness-0 invert" : ""}
+                          ${state === "collapsed" ? "mx-0" : ""}
+                        `}
                       >
                         <Image
                           src={item.icon}
                           alt={item.title}
-                          fill
-                          sizes="24px"
-                          className="object-contain"
+                          className="object-contain w-full h-full"
                         />
                       </span>
-                      <span>{item.title}</span>
+                      {state === "expanded" && (
+                        <span className="lg:ml-3">{item.title}</span>
+                      )}
                     </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
@@ -122,26 +141,46 @@ export function DashboardSidebar() {
             </div>
           </div>
         )}
-        <SidebarMenu>
+        <SidebarMenu className="gap-4">
           {footerItems.map((item) => (
             <SidebarMenuItem key={item.title}>
               <SidebarMenuButton
                 asChild
-                className={
-                  pathname === item.url
-                    ? "bg-orange-500 text-white hover:text-white"
-                    : ""
-                }
+                className={`
+                  py-5 transition-all duration-200
+                  ${
+                    pathname === item.url
+                      ? "bg-orange-500 text-white hover:text-white"
+                      : "hover:bg-gray-100"
+                  }
+                  ${
+                    state === "collapsed"
+                      ? "w-10 h-10 p-0 mx-auto rounded-lg justify-center items-center"
+                      : ""
+                  }
+                `}
               >
-                <Link href={item.url}>
+                <Link
+                  href={item.url}
+                  className={`
+                    ${
+                      state === "collapsed"
+                        ? "flex justify-center items-center w-full h-full"
+                        : "flex items-center"
+                    }
+                  `}
+                >
                   <span
-                    className={`relative w-6 h-6 flex-shrink-0 transition-all duration-200 ${
-                      pathname === item.url ? "text-white" : ""
-                    }`}
+                    className={`
+                      w-6 h-6 flex-shrink-0 transition-all duration-200
+                      ${pathname === item.url ? "text-white" : ""}
+                    `}
                   >
                     {item.icon}
                   </span>
-                  <span>{item.title}</span>
+                  {state === "expanded" && (
+                    <span className="lg:ml-3">{item.title}</span>
+                  )}
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
