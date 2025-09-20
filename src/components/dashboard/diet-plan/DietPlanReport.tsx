@@ -40,7 +40,6 @@ interface DayData {
 }
 
 export default function DietPlanReport() {
-  const router = useRouter();
   const [selectedWeek, setSelectedWeek] = useState("1");
   const [selectedDay, setSelectedDay] = useState(2);
 
@@ -361,12 +360,12 @@ export default function DietPlanReport() {
             <h3 className="text-lg font-semibold text-gray-900 mb-4">
               Total Daily Nutrition Summary
             </h3>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 border rounded-xl p-4">
               <div className="text-center">
                 <div className="text-sm text-gray-500 mb-1">
                   Total Calories <span className="text-xs">(kcal)</span>
                 </div>
-                <div className="text-2xl font-bold text-gray-900">
+                <div className="text-xl lg:text-2xl font-bold text-gray-900">
                   {totals.calories} kcal
                 </div>
               </div>
@@ -374,7 +373,7 @@ export default function DietPlanReport() {
                 <div className="text-sm text-gray-500 mb-1">
                   Total Protein <span className="text-xs">(g)</span>
                 </div>
-                <div className="text-2xl font-bold text-gray-900">
+                <div className="text-xl lg:text-2xl font-bold text-gray-900">
                   {totals.protein}g
                 </div>
               </div>
@@ -382,7 +381,7 @@ export default function DietPlanReport() {
                 <div className="text-sm text-gray-500 mb-1">
                   Total Fat <span className="text-xs">(g)</span>
                 </div>
-                <div className="text-2xl font-bold text-gray-900">
+                <div className="text-xl lg:text-2xl font-bold text-gray-900">
                   {totals.fat}g
                 </div>
               </div>
@@ -390,7 +389,7 @@ export default function DietPlanReport() {
                 <div className="text-sm text-gray-500 mb-1">
                   Total Carbs <span className="text-xs">(g)</span>
                 </div>
-                <div className="text-2xl font-bold text-gray-900">
+                <div className="text-xl lg:text-2xl font-bold text-gray-900">
                   {totals.carbs}g
                 </div>
               </div>

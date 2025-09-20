@@ -1,6 +1,5 @@
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
-import DietPlanCard from "@/components/cards/DietPlanCard";
 import Link from "next/link";
 import DietProgressChart from "@/components/charts/DietProgressChart";
 import DietPlanReport from "@/components/dashboard/diet-plan/DietPlanReport";
@@ -8,9 +7,9 @@ import AIChatbot from "@/components/dashboard/AIChatbot";
 
 export default function DietPlanPage() {
   return (
-    <div className="min-h-screen bg-gray-100 px-4 py-10 ">
+    <div className="min-h-screen pt-6 pb-12 space-y-4">
       {/* Header */}
-      <div className="flex items-center justify-between pb-4">
+      <div className="flex items-center justify-between">
         <h3 className="text-xl md:text-2xl font-semibold text-gray-900">
           Diet Plan Report
         </h3>
@@ -28,22 +27,16 @@ export default function DietPlanPage() {
       </div>
 
       {/* Diet Progress Chart */}
-      <div className="mb-4">
-        <DietProgressChart />
-      </div>
+      <DietProgressChart className="w-full bg-white p-4 gap-4" />
 
-      <div className="max-h-screen">
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {/* Main Content */}
-          <div className="md:col-span-2 lg:col-span-3 flex items-center justify-between">
-            {/* Empty State */}
-            {/* <DietPlanCard className="max-w-md mx-auto border-0 shadow-none" /> */}
-            <DietPlanReport />
-          </div>
-          <div className="relative col-span-1">
-            <AIChatbot />
-          </div>
+      <div className="grid grid-cols-1 md:grid-cols-3  gap-6">
+        {/* Main Content */}
+        <div className="md:col-span-2 flex items-center justify-between">
+          {/* Empty State */}
+          {/* <DietPlanCard className="max-w-md mx-auto border-0 shadow-none" /> */}
+          <DietPlanReport />
         </div>
+        <AIChatbot />
       </div>
     </div>
   );

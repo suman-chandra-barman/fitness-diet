@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Bell, Plus } from "lucide-react";
+import { Bell } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import calorie from "@/assets/svg/dashboard/calorie.svg";
@@ -34,7 +34,7 @@ const OverviewPage = () => {
   ];
 
   return (
-    <div className="py-4">
+    <div className="py-4 pb-12">
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
         <h1 className="text-2xl lg:text-3xl font-bold text-gray-900">
@@ -52,8 +52,8 @@ const OverviewPage = () => {
         <div className="lg:col-span-2 space-y-6">
           {/* Progress Charts Row */}
           <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
-            <DietProgressChart />
-            <WorkoutProgressChart />
+            <DietProgressChart className="w-full bg-white p-4 gap-4" />
+            <WorkoutProgressChart className="w-full bg-white p-4 gap-4" />
           </div>
 
           {/* Nutrition Stats */}

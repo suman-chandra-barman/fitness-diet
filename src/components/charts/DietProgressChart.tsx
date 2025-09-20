@@ -38,7 +38,7 @@ const CustomTooltip = ({ active, payload }: TooltipProps<number, string>) => {
   return null;
 };
 
-const DietProgressChart = () => {
+const DietProgressChart = ({ className }) => {
   const [selectedPeriod, setSelectedPeriod] = useState("weekly");
 
   const weeklyData: DayProgress[] = [
@@ -93,7 +93,7 @@ const DietProgressChart = () => {
   const currentData = getCurrentData();
 
   return (
-    <Card className="w-full bg-white shadow-sm border border-gray-100 p-4 gap-4">
+    <Card className={className}>
       <CardHeader>
         <div className="flex items-center justify-between">
           <h3 className="text-lg font-semibold text-gray-900">Diet Progress</h3>
