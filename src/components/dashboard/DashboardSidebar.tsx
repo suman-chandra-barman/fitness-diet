@@ -12,17 +12,6 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
@@ -38,7 +27,7 @@ import { Progress } from "../ui/progress";
 const items = [
   {
     title: "Overview",
-    url: "/dashboard",
+    url: "/dashboard/overview",
     icon: overview,
   },
   {
@@ -90,7 +79,7 @@ export function DashboardSidebar() {
   return (
     <Sidebar collapsible="icon">
       <SidebarHeader className="h-20 mt-6">
-        <Link href="/dashboard" className="text-lg font-bold">
+        <Link href="/dashboard/overview" className="text-lg font-bold">
           <Image src={logo} alt="Logo" width={100} />
         </Link>
       </SidebarHeader>
@@ -103,35 +92,35 @@ export function DashboardSidebar() {
                   <SidebarMenuButton
                     asChild
                     className={`
-                      py-5 transition-all duration-200
-                      ${
-                        pathname === item.url
-                          ? "bg-orange-500 hover:bg-orange-500 text-white hover:text-white"
-                          : "hover:bg-gray-100"
-                      }
-                      ${
-                        state === "collapsed"
-                          ? "w-10 h-10 p-0 mx-auto rounded-lg justify-center items-center"
-                          : ""
-                      }
-                    `}
+          py-5 transition-all duration-200
+          ${
+            pathname.startsWith(item.url)
+              ? "bg-orange-500 hover:bg-orange-500 text-white hover:text-white"
+              : "hover:bg-gray-100"
+          }
+          ${
+            state === "collapsed"
+              ? "w-10 h-10 p-0 mx-auto rounded-lg justify-center items-center"
+              : ""
+          }
+        `}
                   >
                     <Link
                       href={item.url}
                       className={`
-                        ${
-                          state === "collapsed"
-                            ? "flex justify-center items-center w-full h-full"
-                            : "flex items-center"
-                        }
-                      `}
+            ${
+              state === "collapsed"
+                ? "flex justify-center items-center w-full h-full"
+                : "flex items-center"
+            }
+          `}
                     >
                       <span
                         className={`
-                          w-6 h-6 flex-shrink-0 transition-all duration-200
-                          ${pathname === item.url ? "brightness-0 invert" : ""}
-                          ${state === "collapsed" ? "mx-0" : ""}
-                        `}
+              w-6 h-6 flex-shrink-0 transition-all duration-200
+              ${pathname.startsWith(item.url) ? "brightness-0 invert" : ""}
+              ${state === "collapsed" ? "mx-0" : ""}
+            `}
                       >
                         <Image
                           src={item.icon}
@@ -171,89 +160,39 @@ export function DashboardSidebar() {
         <SidebarMenu className="gap-4">
           {footerItems.map((item) => (
             <SidebarMenuItem key={item.title}>
-              {item.isLogout ? (
-                // Logout button with confirmation dialog
-                <AlertDialog>
-                  <AlertDialogTrigger asChild>
-                    <SidebarMenuButton
-                      className={`
-                        py-5 transition-all duration-200 hover:bg-gray-100
-                        ${
-                          state === "collapsed"
-                            ? "w-10 h-10 p-0 mx-auto rounded-lg justify-center items-center"
-                            : ""
-                        }
-                      `}
-                    >
-                      <div
-                        className={`
-                          ${
-                            state === "collapsed"
-                              ? "flex justify-center items-center w-full h-full"
-                              : "flex items-center"
-                          }
-                        `}
-                      >
-                        <span className="w-6 h-6 flex-shrink-0 transition-all duration-200">
-                          {item.icon}
-                        </span>
-                        {state === "expanded" && (
-                          <span className="lg:ml-3">{item.title}</span>
-                        )}
-                      </div>
-                    </SidebarMenuButton>
-                  </AlertDialogTrigger>
-                  <AlertDialogContent>
-                    <AlertDialogHeader>
-                      <AlertDialogTitle>Confirm Logout</AlertDialogTitle>
-                      <AlertDialogDescription>
-                        Are you sure you want to logout your account?
-                      </AlertDialogDescription>
-                    </AlertDialogHeader>
-                    <AlertDialogFooter>
-                      <AlertDialogCancel>Cancel</AlertDialogCancel>
-                      <AlertDialogAction
-                        onClick={handleLogout}
-                        className="bg-red-600 hover:bg-red-700"
-                      >
-                        Yes, Logout
-                      </AlertDialogAction>
-                    </AlertDialogFooter>
-                  </AlertDialogContent>
-                </AlertDialog>
-              ) : (
-                // Regular menu items (Profile)
+              {/* ... */}
+              {!item.isLogout && (
                 <SidebarMenuButton
                   asChild
                   className={`
-                    py-5 transition-all duration-200
-                    ${
-                      pathname === item.url
-                        ? "bg-orange-500 hover:bg-orange-500 text-white hover:text-white"
-                        : "hover:bg-gray-100"
-                    }
-                    ${
-                      state === "collapsed"
-                        ? "w-10 h-10 p-0 mx-auto rounded-lg justify-center items-center"
-                        : ""
-                    }
-                  `}
+            py-5 transition-all duration-200
+            ${
+              pathname.startsWith(item.url)
+                ? "bg-orange-500 hover:bg-orange-500 text-white hover:text-white"
+                : "hover:bg-gray-100"
+            }
+            ${
+              state === "collapsed"
+                ? "w-10 h-10 p-0 mx-auto rounded-lg justify-center items-center"
+                : ""
+            }
+          `}
                 >
                   <Link
                     href={item.url}
                     className={`
-                      ${
-                        state === "collapsed"
-                          ? "flex justify-center items-center w-full h-full"
-                          : "flex items-center"
-                      }
-                    `}
+              ${
+                state === "collapsed"
+                  ? "flex justify-center items-center w-full h-full"
+                  : "flex items-center"
+              }
+            `}
                   >
                     <span
                       className={`
-                        w-6 h-6 flex-shrink-0 transition-all duration-200
-                        ${pathname === item.url ? "text-white" : ""}
-                      `}
+                w-6 h-6 flex-shrink-0 transition-all duration-200
+                ${pathname.startsWith(item.url) ? "text-white" : ""}
+              `}
                     >
                       {item.icon}
                     </span>
@@ -263,6 +202,7 @@ export function DashboardSidebar() {
                   </Link>
                 </SidebarMenuButton>
               )}
+              {/* ... */}
             </SidebarMenuItem>
           ))}
         </SidebarMenu>

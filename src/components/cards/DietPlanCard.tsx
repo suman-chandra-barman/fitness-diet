@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { Card, CardContent } from "../ui/card";
 import Image from "next/image";
@@ -26,7 +28,7 @@ function DietPlanCard({ className }: TDietPlanCardProps) {
         </div>
         <Button
           className="text-white mt-6"
-          onClick={() => router.push("/dashboard/create-diet-plan")}
+          onClick={() => router.push("/dashboard/diet-plan/create-diet-plan")}
         >
           Create Plan
         </Button>

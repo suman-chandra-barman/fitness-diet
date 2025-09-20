@@ -13,7 +13,7 @@ export default function DietPlanPage() {
         <h3 className="text-xl md:text-2xl font-semibold text-gray-900">
           Diet Plan Report
         </h3>
-        <Link href="/dashboard/create-goal">
+        <Link href="/dashboard/diet-plan/create-diet-plan">
           <Button
             variant="outline"
             className="flex items-center font-medium space-x-2 px-4 py-2 bg-orange-50 hover:bg-orange-100  cursor-pointer"

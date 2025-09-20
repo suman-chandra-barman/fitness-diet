@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Bell } from "lucide-react";
+import { Bell, Plus } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import calorie from "@/assets/svg/dashboard/calorie.svg";
@@ -17,6 +17,7 @@ import TodayProgressCircleCard from "@/components/cards/TodayProgressCircleCard"
 import NutritionCard from "@/components/cards/NutritionCard";
 import { StaticImport } from "next/dist/shared/lib/get-img-props";
 import WorkoutProgressChart from "@/components/charts/WorkoutProgressChart";
+import Link from "next/link";
 
 export type TNutritionStat = {
   name: string;
@@ -34,19 +35,7 @@ const OverviewPage = () => {
   ];
 
   return (
-    <div className="py-4 pb-12">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
-        <h1 className="text-2xl lg:text-3xl font-bold text-gray-900">
-          Overview
-        </h1>
-        <div className="flex items-center gap-3">
-          <Button variant="outline" size="icon">
-            <Bell className="w-4 h-4" />
-          </Button>
-        </div>
-      </div>
-
+    <div className="pb-12">
       <div className="grid grid-cols-1 lg:grid-cols-3  gap-6">
         {/* Left Column */}
         <div className="lg:col-span-2 space-y-6">

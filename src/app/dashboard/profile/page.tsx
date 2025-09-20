@@ -14,10 +14,10 @@ function ProfilePage() {
         </div>
 
         {/* Upgrade Diet Plan Card */}
-        <UpgradeDietPlanCard className="col-span-1 bg-white py-4 rounded-2xl shadow-2xl" />
+        <UpgradeDietPlanCard className="col-span-1 py-4 " />
 
         {/* Upgrade Workout Plan Card */}
-        <UpgradeWorkoutPlanCard className="col-span-1 py-4 text-white rounded-2xl shadow-2xl" />
+        <UpgradeWorkoutPlanCard className="col-span-1 py-4" />
       </div>
       <BillingHistory />
     </section>

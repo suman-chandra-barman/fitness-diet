@@ -21,7 +21,7 @@ function WorkoutPlanCard({ className }: TWorkoutPlanCardProps) {
           <p className="text-gray-600">Create Your Personalize</p>
           <h4 className="font-bold text-purple-600">Workout Plan</h4>
         </div>
-        <Button className=" text-white w-full">Create Plan</Button>
+        <Button className=" text-white  mt-6">Create Plan</Button>
       </CardContent>
     </Card>
   );

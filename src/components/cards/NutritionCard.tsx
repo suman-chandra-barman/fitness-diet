@@ -1,7 +1,7 @@
 import React from "react";
 import { Card } from "../ui/card";
 import Image from "next/image";
-import { TNutritionStat } from "@/app/dashboard/page";
+import { TNutritionStat } from "@/app/dashboard/overview/page";
 
 function NutritionCard({ stat }: { stat: TNutritionStat }) {
   return (

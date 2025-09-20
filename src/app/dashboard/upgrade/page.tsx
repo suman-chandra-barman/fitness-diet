@@ -8,8 +8,8 @@ export default function UpgradePage() {
   return (
     <div className="min-h-screen py-12">
         <div className="flex items-center gap-6 mb-12">
-          <UpgradeDietPlanCard className="bg-white rounded-2xl shadow-2xl py-4 min-w-md" />
-          <UpgradeWorkoutPlanCard className="bg-white rounded-2xl shadow-2xl py-4 min-w-md" />
+          <UpgradeDietPlanCard className="lg:min-w-sm" />
+          <UpgradeWorkoutPlanCard className="lg:min-w-sm" />
         </div>
         <BillingHistory />
     </div>
