@@ -12,6 +12,17 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
@@ -46,22 +57,35 @@ const items = [
     icon: upgrade,
   },
 ];
+
 const footerItems = [
   {
     title: "Profile",
     url: "/dashboard/profile",
     icon: <User />,
+    isLogout: false,
   },
   {
     title: "Logout",
     url: "",
     icon: <LogOut />,
+    isLogout: true,
   },
 ];
 
 export function DashboardSidebar() {
   const pathname = usePathname();
   const { state } = useSidebar();
+
+  const handleLogout = () => {
+    // Add your logout logic here
+    console.log("Logging out...");
+    // For example:
+    // - Clear authentication tokens
+    // - Redirect to login page
+    // - Clear user session
+    // router.push('/login');
+  };
 
   return (
     <Sidebar collapsible="icon">
@@ -137,52 +161,108 @@ export function DashboardSidebar() {
             </div>
             <div className="text-orange-500">
               <span className="text-2xl font-semibold">33% </span>
-              <Progress value={33} className="bg-gray-300 rounded-full mt-2 h-1.5" />
+              <Progress
+                value={33}
+                className="bg-gray-300 rounded-full mt-2 h-1.5"
+              />
             </div>
           </div>
         )}
         <SidebarMenu className="gap-4">
           {footerItems.map((item) => (
             <SidebarMenuItem key={item.title}>
-              <SidebarMenuButton
-                asChild
-                className={`
-                  py-5 transition-all duration-200
-                  ${
-                    pathname === item.url
-                      ? "bg-orange-500 hover:bg-orange-500 text-white hover:text-white"
-                      : "hover:bg-gray-100"
-                  }
-                  ${
-                    state === "collapsed"
-                      ? "w-10 h-10 p-0 mx-auto rounded-lg justify-center items-center"
-                      : ""
-                  }
-                `}
-              >
-                <Link
-                  href={item.url}
+              {item.isLogout ? (
+                // Logout button with confirmation dialog
+                <AlertDialog>
+                  <AlertDialogTrigger asChild>
+                    <SidebarMenuButton
+                      className={`
+                        py-5 transition-all duration-200 hover:bg-gray-100
+                        ${
+                          state === "collapsed"
+                            ? "w-10 h-10 p-0 mx-auto rounded-lg justify-center items-center"
+                            : ""
+                        }
+                      `}
+                    >
+                      <div
+                        className={`
+                          ${
+                            state === "collapsed"
+                              ? "flex justify-center items-center w-full h-full"
+                              : "flex items-center"
+                          }
+                        `}
+                      >
+                        <span className="w-6 h-6 flex-shrink-0 transition-all duration-200">
+                          {item.icon}
+                        </span>
+                        {state === "expanded" && (
+                          <span className="lg:ml-3">{item.title}</span>
+                        )}
+                      </div>
+                    </SidebarMenuButton>
+                  </AlertDialogTrigger>
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>Confirm Logout</AlertDialogTitle>
+                      <AlertDialogDescription>
+                        Are you sure you want to logout your account?
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel>Cancel</AlertDialogCancel>
+                      <AlertDialogAction
+                        onClick={handleLogout}
+                        className="bg-red-600 hover:bg-red-700"
+                      >
+                        Yes, Logout
+                      </AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
+              ) : (
+                // Regular menu items (Profile)
+                <SidebarMenuButton
+                  asChild
                   className={`
+                    py-5 transition-all duration-200
+                    ${
+                      pathname === item.url
+                        ? "bg-orange-500 hover:bg-orange-500 text-white hover:text-white"
+                        : "hover:bg-gray-100"
+                    }
                     ${
                       state === "collapsed"
-                        ? "flex justify-center items-center w-full h-full"
-                        : "flex items-center"
+                        ? "w-10 h-10 p-0 mx-auto rounded-lg justify-center items-center"
+                        : ""
                     }
                   `}
                 >
-                  <span
+                  <Link
+                    href={item.url}
                     className={`
-                      w-6 h-6 flex-shrink-0 transition-all duration-200
-                      ${pathname === item.url ? "text-white" : ""}
+                      ${
+                        state === "collapsed"
+                          ? "flex justify-center items-center w-full h-full"
+                          : "flex items-center"
+                      }
                     `}
                   >
-                    {item.icon}
-                  </span>
-                  {state === "expanded" && (
-                    <span className="lg:ml-3">{item.title}</span>
-                  )}
-                </Link>
-              </SidebarMenuButton>
+                    <span
+                      className={`
+                        w-6 h-6 flex-shrink-0 transition-all duration-200
+                        ${pathname === item.url ? "text-white" : ""}
+                      `}
+                    >
+                      {item.icon}
+                    </span>
+                    {state === "expanded" && (
+                      <span className="lg:ml-3">{item.title}</span>
+                    )}
+                  </Link>
+                </SidebarMenuButton>
+              )}
             </SidebarMenuItem>
           ))}
         </SidebarMenu>
