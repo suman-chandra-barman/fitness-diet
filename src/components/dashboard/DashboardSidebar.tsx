@@ -128,7 +128,7 @@ export function DashboardSidebar() {
       </SidebarContent>
       <SidebarFooter className="py-10">
         {state === "expanded" && (
-          <div className="bg-orange-100 p-4 rounded-xl border border-orange-500">
+          <div className="bg-orange-100 p-4 rounded-xl border border-orange-500 mb-4">
             <div className="flex items-center justify-between">
               <p>Profile Set-up</p>
               <span>
@@ -137,7 +137,7 @@ export function DashboardSidebar() {
             </div>
             <div className="text-orange-500">
               <span className="text-2xl font-semibold">33% </span>
-              <Progress value={33} className="bg-gray-300 h-4 rounded-full" />
+              <Progress value={33} className="bg-gray-300 rounded-full mt-2 h-1.5" />
             </div>
           </div>
         )}
@@ -150,7 +150,7 @@ export function DashboardSidebar() {
                   py-5 transition-all duration-200
                   ${
                     pathname === item.url
-                      ? "bg-orange-500 text-white hover:text-white"
+                      ? "bg-orange-500 hover:bg-orange-500 text-white hover:text-white"
                       : "hover:bg-gray-100"
                   }
                   ${
