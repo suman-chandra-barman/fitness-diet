@@ -17,7 +17,6 @@ import {
   ResponsiveContainer,
   Cell,
   Tooltip,
-  TooltipProps,
 } from "recharts";
 
 interface DayProgress {
@@ -25,8 +24,22 @@ interface DayProgress {
   progress: number;
 }
 
+interface DietProgressChartProps {
+  className: string;
+}
+
+interface CustomTooltipProps {
+  active?: boolean;
+  payload?: Array<{
+    value: number;
+    dataKey: string;
+    color: string;
+  }>;
+  label?: string;
+}
+
 // Custom tooltip component
-const CustomTooltip = ({ active, payload }: TooltipProps<number, string>) => {
+const CustomTooltip: React.FC<CustomTooltipProps> = ({ active, payload }) => {
   if (active && payload && payload.length) {
     const value = payload[0].value;
     return (
@@ -38,7 +51,7 @@ const CustomTooltip = ({ active, payload }: TooltipProps<number, string>) => {
   return null;
 };
 
-const DietProgressChart = ({ className }) => {
+const DietProgressChart = ({ className }: DietProgressChartProps) => {
   const [selectedPeriod, setSelectedPeriod] = useState("weekly");
 
   const weeklyData: DayProgress[] = [
