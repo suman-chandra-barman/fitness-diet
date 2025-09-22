@@ -12,9 +12,21 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import { useState } from "react";
 import logo from "@/assets/logo.png";
 import overview from "@/assets/svg/dashboard/Widget 5.svg";
 import workout from "@/assets/svg/dashboard/Workout Plan.svg";
@@ -65,6 +77,7 @@ const footerItems = [
 export function DashboardSidebar() {
   const pathname = usePathname();
   const { state } = useSidebar();
+  const [isLogoutOpen, setIsLogoutOpen] = useState(false);
 
   const handleLogout = () => {
     // Add your logout logic here
@@ -74,6 +87,7 @@ export function DashboardSidebar() {
     // - Redirect to login page
     // - Clear user session
     // router.push('/login');
+    setIsLogoutOpen(false); // Close the dialog
   };
 
   return (
@@ -160,7 +174,6 @@ export function DashboardSidebar() {
         <SidebarMenu className="gap-4">
           {footerItems.map((item) => (
             <SidebarMenuItem key={item.title}>
-              {/* ... */}
               {!item.isLogout && (
                 <SidebarMenuButton
                   asChild
@@ -202,7 +215,59 @@ export function DashboardSidebar() {
                   </Link>
                 </SidebarMenuButton>
               )}
-              {/* ... */}
+              {item.isLogout && (
+                <AlertDialog open={isLogoutOpen} onOpenChange={setIsLogoutOpen}>
+                  <AlertDialogTrigger asChild>
+                    <SidebarMenuButton
+                      className={`
+                py-5 transition-all duration-200 hover:bg-red-50 cursor-pointer
+                ${
+                  state === "collapsed"
+                    ? "w-10 h-10 p-0 mx-auto rounded-lg justify-center items-center"
+                    : ""
+                }
+              `}
+                    >
+                      <div
+                        className={`
+                  ${
+                    state === "collapsed"
+                      ? "flex justify-center items-center w-full h-full"
+                      : "flex items-center"
+                  }
+                `}
+                      >
+                        <span className="w-6 h-6 flex-shrink-0 transition-all duration-200 text-red-500">
+                          {item.icon}
+                        </span>
+                        {state === "expanded" && (
+                          <span className="lg:ml-3 text-red-500">
+                            {item.title}
+                          </span>
+                        )}
+                      </div>
+                    </SidebarMenuButton>
+                  </AlertDialogTrigger>
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>Logout Confirmation</AlertDialogTitle>
+                      <AlertDialogDescription>
+                        Are you sure you want to logout? You will need to sign
+                        in again to access your account.
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel>Cancel</AlertDialogCancel>
+                      <AlertDialogAction
+                        onClick={handleLogout}
+                        className="bg-red-500 hover:bg-red-600"
+                      >
+                        Logout
+                      </AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
+              )}
             </SidebarMenuItem>
           ))}
         </SidebarMenu>
