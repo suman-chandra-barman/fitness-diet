@@ -115,7 +115,7 @@ function BillingHistory() {
   };
   return (
     <div>
-      <Card className="bg-white shadow-lg">
+      <Card className="bg-white">
         <CardHeader className="flex flex-row items-center justify-between">
           <CardTitle className="text-xl font-semibold text-gray-900">
             Billing History
