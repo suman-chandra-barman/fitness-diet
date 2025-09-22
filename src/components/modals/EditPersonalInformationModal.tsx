@@ -33,9 +33,9 @@ const personalInfoSchema = z.object({
   age: z.string().min(1, "Age is required"),
   gender: z.string().min(1, "Gender is required"),
   height: z.string().min(1, "Height is required"),
-  heightUnit: z.string().default("FT"),
+  heightUnit: z.string(),
   weight: z.string().min(1, "Weight is required"),
-  weightUnit: z.string().default("KG"),
+  weightUnit: z.string(),
   bodyFatLevel: z.string().min(1, "Body fat level is required"),
   pastInjuries: z.string().min(1, "Please select an option"),
   fitnessGoal: z.string().min(1, "Fitness goal is required"),
@@ -45,9 +45,11 @@ const personalInfoSchema = z.object({
   phoneNumber: z.string().min(1, "Phone number is required"),
 });
 
-export type PersonalInfoFormData = z.infer<typeof personalInfoSchema>;
+type PersonalInfoFormData = z.infer<typeof personalInfoSchema>;
 
-interface EditProfileModalProps {
+export type { PersonalInfoFormData };
+
+interface EditPersonalInformationModalProps {
   isOpen: boolean;
   onClose: () => void;
   personalInfo: PersonalInfoFormData;
@@ -59,14 +61,28 @@ export default function EditPersonalInformationModal({
   onClose,
   personalInfo,
   onSave,
-}: EditProfileModalProps) {
+}: EditPersonalInformationModalProps) {
   const form = useForm<PersonalInfoFormData>({
     resolver: zodResolver(personalInfoSchema),
-    defaultValues: personalInfo,
+    defaultValues: {
+      age: personalInfo.age || "",
+      gender: personalInfo.gender || "",
+      height: personalInfo.height || "",
+      heightUnit: personalInfo.heightUnit || "FT",
+      weight: personalInfo.weight || "",
+      weightUnit: personalInfo.weightUnit || "KG",
+      bodyFatLevel: personalInfo.bodyFatLevel || "",
+      pastInjuries: personalInfo.pastInjuries || "",
+      fitnessGoal: personalInfo.fitnessGoal || "",
+      foodAllergies: personalInfo.foodAllergies || "",
+      trainingPreference: personalInfo.trainingPreference || "",
+      sleepHour: personalInfo.sleepHour || "",
+      phoneNumber: personalInfo.phoneNumber || "",
+    },
   });
 
   const onSubmit = (data: PersonalInfoFormData) => {
-    console.log("edit data", data)
+    console.log("edit data", data);
     onSave(data);
     onClose();
     form.reset(data);
@@ -77,8 +93,14 @@ export default function EditPersonalInformationModal({
     onClose();
   };
 
+  const handleOpenChange = (open: boolean) => {
+    if (!open) {
+      handleClose();
+    }
+  };
+
   return (
-    <Dialog open={isOpen} onOpenChange={handleClose}>
+    <Dialog open={isOpen} onOpenChange={handleOpenChange}>
       <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="text-xl font-semibold">
@@ -111,9 +133,9 @@ export default function EditPersonalInformationModal({
                     <FormLabel>Gender</FormLabel>
                     <Select
                       onValueChange={field.onChange}
-                      defaultValue={field.value}
+                      value={field.value}
                     >
-                      <FormControl>
+                      <FormControl className="w-full">
                         <SelectTrigger>
                           <SelectValue placeholder="Select Gender" />
                         </SelectTrigger>
@@ -151,7 +173,7 @@ export default function EditPersonalInformationModal({
                       <FormItem>
                         <Select
                           onValueChange={field.onChange}
-                          defaultValue={field.value}
+                          value={field.value}
                         >
                           <FormControl>
                             <SelectTrigger className="w-20">
@@ -192,7 +214,7 @@ export default function EditPersonalInformationModal({
                       <FormItem>
                         <Select
                           onValueChange={field.onChange}
-                          defaultValue={field.value}
+                          value={field.value}
                         >
                           <FormControl>
                             <SelectTrigger className="w-20">
@@ -218,9 +240,9 @@ export default function EditPersonalInformationModal({
                     <FormLabel>Body Fat Level</FormLabel>
                     <Select
                       onValueChange={field.onChange}
-                      defaultValue={field.value}
+                      value={field.value}
                     >
-                      <FormControl>
+                      <FormControl className="w-full">
                         <SelectTrigger>
                           <SelectValue placeholder="Select Level" />
                         </SelectTrigger>
@@ -245,9 +267,9 @@ export default function EditPersonalInformationModal({
                     <FormLabel>Past or Current Injuries</FormLabel>
                     <Select
                       onValueChange={field.onChange}
-                      defaultValue={field.value}
+                      value={field.value}
                     >
-                      <FormControl>
+                      <FormControl className="w-full">
                         <SelectTrigger>
                           <SelectValue placeholder="Select Yes or No" />
                         </SelectTrigger>
@@ -270,9 +292,9 @@ export default function EditPersonalInformationModal({
                     <FormLabel>Current Fitness Goal</FormLabel>
                     <Select
                       onValueChange={field.onChange}
-                      defaultValue={field.value}
+                      value={field.value}
                     >
-                      <FormControl>
+                      <FormControl className="w-full">
                         <SelectTrigger>
                           <SelectValue placeholder="Select Goal" />
                         </SelectTrigger>
@@ -300,9 +322,9 @@ export default function EditPersonalInformationModal({
                     <FormLabel>Food Allergies</FormLabel>
                     <Select
                       onValueChange={field.onChange}
-                      defaultValue={field.value}
+                      value={field.value}
                     >
-                      <FormControl>
+                      <FormControl className="w-full">
                         <SelectTrigger>
                           <SelectValue placeholder="Select Yes or No" />
                         </SelectTrigger>
@@ -325,9 +347,9 @@ export default function EditPersonalInformationModal({
                     <FormLabel>Training Preference</FormLabel>
                     <Select
                       onValueChange={field.onChange}
-                      defaultValue={field.value}
+                      value={field.value}
                     >
-                      <FormControl>
+                      <FormControl className="w-full">
                         <SelectTrigger>
                           <SelectValue placeholder="Select Goal" />
                         </SelectTrigger>
@@ -355,9 +377,9 @@ export default function EditPersonalInformationModal({
                     <FormLabel>Sleep Hour</FormLabel>
                     <Select
                       onValueChange={field.onChange}
-                      defaultValue={field.value}
+                      value={field.value}
                     >
-                      <FormControl>
+                      <FormControl className="w-full">
                         <SelectTrigger>
                           <SelectValue placeholder="Select Level" />
                         </SelectTrigger>
@@ -401,10 +423,7 @@ export default function EditPersonalInformationModal({
               >
                 Cancel
               </Button>
-              <Button
-                type="submit"
-                className="w-full sm:w-auto"
-              >
+              <Button type="submit" className="w-full sm:w-auto">
                 Save Changes
               </Button>
             </DialogFooter>
